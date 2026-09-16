@@ -1,12 +1,12 @@
-import { Combatiente } from "./Combatiente";
-import { Escudo } from "./Escudo";
-import { EscudoConPorcentaje } from "./Escudoconporcentaje";
+import { _Combatiente } from "./Combatiente";
+import { _Escudo } from "./Escudo";
+import { _EscudoConPorcentaje } from "./EscudoConPorcentaje";
 
-export class Soldado implements Combatiente {
+export class Soldado implements _Combatiente {
     private vida: number = 1;
-    private escudo: Escudo;
+    private escudo: _Escudo;
 
-    constructor(escudo: Escudo = new EscudoConPorcentaje(100)) {
+    constructor(escudo: _Escudo = new _EscudoConPorcentaje(100)) {
         this.escudo = escudo;
     }
 

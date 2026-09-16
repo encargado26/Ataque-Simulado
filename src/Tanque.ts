@@ -1,6 +1,6 @@
-import { Combatiente } from "./Combatiente";
+import { _Combatiente } from "./Combatiente";
 
-export class Tanque implements Combatiente {
+export class _Tanque implements _Combatiente {
 	private vida: number = 2;
 
 	disparar(): void {

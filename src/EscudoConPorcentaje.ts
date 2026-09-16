@@ -1,6 +1,6 @@
-import { Escudo } from "./Escudo";
+import { _Escudo } from "./Escudo";
 
-export class EscudoConPorcentaje implements Escudo {
+export class _EscudoConPorcentaje implements _Escudo {
   private porcentaje: number;
 
   constructor(porcentaje: number) {

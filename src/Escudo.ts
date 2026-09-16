@@ -1,4 +1,4 @@
-export interface Escudo {
+export interface _Escudo {
     proteger(danio: number): unknown;
 	reducirDanio(danio: number): number;
 }
