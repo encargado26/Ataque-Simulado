@@ -7,7 +7,11 @@ export class EscudoConPorcentaje implements Escudo {
     this.porcentaje = porcentaje;
   }
 
-  reducirDanio(danio: number): number {
-    return danio * (1 - this.porcentaje);
+  proteger(danio: number): number {
+    return danio * (1 - this.porcentaje / 100);
   }
+
+    reducirDanio(danio: number): number {
+        return danio * (1 - this.porcentaje / 100);
+    }
 }
