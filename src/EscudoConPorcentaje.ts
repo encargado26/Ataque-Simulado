@@ -1,4 +1,3 @@
-// EscudoConPorcentaje.ts
 import { Escudo } from "./Escudo";
 
 export class EscudoConPorcentaje implements Escudo {
@@ -10,16 +9,12 @@ export class EscudoConPorcentaje implements Escudo {
 
   reducirDanio(danio: number): number {
     const danioReducido = danio * (1 - this.porcentaje / 100);
-
     // Cada vez que se usa, el escudo pierde 50% de efectividad
-    if (this.porcentaje > 0) {
-      this.porcentaje = Math.max(0, this.porcentaje - 50);
-    }
-
+    this.porcentaje = Math.max(0, this.porcentaje - 50);
     return danioReducido;
   }
 
   proteger(danio: number): unknown {
     return this.reducirDanio(danio);
   }
-}
+  }
