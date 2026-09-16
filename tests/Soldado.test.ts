@@ -27,5 +27,25 @@ describe("Soldado con escudo dinámico", () => {
 it("deberia disparar correctamente", () => {
     const soldado = new Soldado(new EscudoConPorcentaje(100));
     expect(() => soldado.disparar()).not.toThrow();
+    soldado.recibirDisparo(1);
+    expect(soldado.estaVivo()).toBe(true);
+  });
+
+  it("soldado 1 dispara correctamente", () => {
+    const soldado1 = new Soldado(new EscudoConPorcentaje(100));
+    const soldado2 = new Soldado(new EscudoConPorcentaje(100));
+
+    expect(() => soldado1.disparar()).not.toThrow();
+    soldado2.recibirDisparo(1);
+    expect(soldado2.estaVivo()).toBe(true);
+  });
+
+  it("soldado 2 dispara correctamente", () => {
+    const soldado1 = new Soldado(new EscudoConPorcentaje(100));
+    const soldado2 = new Soldado(new EscudoConPorcentaje(100));
+
+    expect(() => soldado2.disparar()).not.toThrow();
+    soldado1.recibirDisparo(1);
+    expect(soldado1.estaVivo()).toBe(true);
   });
 });
