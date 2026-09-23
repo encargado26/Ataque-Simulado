@@ -1,17 +1,26 @@
-import { _Combatiente,} from "./Combatiente";
+import { _Combatiente } from "./Combatiente";
+import { _Escudo } from "./Escudo";
+import { _EscudoConPorcentaje } from "./EscudoConPorcentaje";
 
 export class _Buque implements _Combatiente {
-	private vida: number = 3;
+  private vida: number = 3;
+  private escudo: _Escudo;
 
-	disparar(): void {
-		console.log("Buque dispara");
-	}
+  constructor(escudo: _Escudo = new _EscudoConPorcentaje(0)) {
+    this.escudo = escudo;
+  }
 
-	recibirDisparo(danio: number): void {
-		this.vida -= danio;
-	}
+  disparar(objetivo?: _Combatiente): void {
+    console.log("Buque dispara");
+    objetivo?.recibirDisparo(1);
+  }
 
-	estaVivo(): boolean {
-		return this.vida > 0;
-	}
+  recibirDisparo(danio: number): void {
+    const danioReal = this.escudo.proteger(danio) as number;
+    this.vida -= danioReal;
+  }
+
+  estaVivo(): boolean {
+    return this.vida > 0;
+  }
 }
