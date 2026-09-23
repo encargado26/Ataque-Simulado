@@ -10,9 +10,10 @@ export class Soldado implements _Combatiente {
         this.escudo = escudo;
     }
 
-    disparar(): void {
-        console.log("Soldado dispara");
-    }
+    disparar(objetivo?: _Combatiente): void {
+    console.log("Soldado dispara");
+    objetivo?.recibirDisparo(1);
+}
 
     recibirDisparo(danio: number): void {
         const danioReal = this.escudo.proteger(danio) as number;
