@@ -9,12 +9,12 @@ export class _EscudoConPorcentaje implements _Escudo {
 
   reducirDanio(danio: number): number {
     const danioReducido = danio * (1 - this.porcentaje / 100);
-    // Cada vez que se usa, el escudo pierde 50% de efectividad
-    this.porcentaje = Math.max(0, this.porcentaje - 50);
+    // Cada disparo reduce 25% de efectividad
+    this.porcentaje = Math.max(0, this.porcentaje - 25);
     return danioReducido;
   }
 
-  proteger(danio: number): unknown {
+  proteger(danio: number): number {
     return this.reducirDanio(danio);
   }
-  }
+}
