@@ -1,27 +1,38 @@
 import { describe, it, expect } from "vitest";
 import { _Tanque } from "../src/Tanque";
+import { _EscudoConPorcentaje } from "../src/EscudoConPorcentaje";
 
-describe("Tanque", () => {
-	it("deberia estar vivo al inicio", () => {
-		const tanque = new _Tanque();
-		expect(tanque.estaVivo()).toBe(true);
-	});
+describe("Tanque sin escudo", () => {
+  it("resiste un disparo y muere en el segundo", () => {
+    const atacante = new _Tanque();
+    const defensor = new _Tanque(new _EscudoConPorcentaje(0));
 
-	it("deberia seguir vivo despues de recibir un disparo", () => {
-		const tanque = new _Tanque();
-		tanque.recibirDisparo(1);
-		expect(tanque.estaVivo()).toBe(true);
-	});
+    atacante.disparar(defensor); // vida pasa de 2 → 1
+    expect(defensor.estaVivo()).toBe(true);
 
-	it("deberia morir cuando recibe dos disparos", () => {
-		const tanque = new _Tanque();
-		tanque.recibirDisparo(1);
-		tanque.recibirDisparo(1);
-		expect(tanque.estaVivo()).toBe(false);
-	});
+    atacante.disparar(defensor); // vida pasa de 1 → 0
+    expect(defensor.estaVivo()).toBe(false);
+  });
+});
 
-	it("deberia disparar correctamente", () => {
-		const tanque = new _Tanque();
-		expect(() => tanque.disparar()).not.toThrow();
-	});
+describe("Tanque con escudo al 100%", () => {
+  it("resiste más disparos gracias al escudo", () => {
+    const atacante = new _Tanque();
+    const defensor = new _Tanque(new _EscudoConPorcentaje(100));
+
+    atacante.disparar(defensor); // escudo baja a 75%
+    expect(defensor.estaVivo()).toBe(true);
+
+    atacante.disparar(defensor); // escudo baja a 50%
+    expect(defensor.estaVivo()).toBe(true);
+
+    atacante.disparar(defensor); // escudo baja a 25%
+    expect(defensor.estaVivo()).toBe(true);
+
+    atacante.disparar(defensor); // escudo roto baja 1 vida, vida pasa de 2 → 1
+    expect(defensor.estaVivo()).toBe(true);
+
+    atacante.disparar(defensor); // vida pasa de 1 → 0
+    expect(defensor.estaVivo()).toBe(false);
+  });
 });
