@@ -2,48 +2,32 @@ import { describe, it, expect } from "vitest";
 import { Soldado } from "../src/Soldado";
 import { _EscudoConPorcentaje } from "../src/EscudoConPorcentaje";
 
-describe("Soldado con escudo dinámico", () => {
-  it("sobrevive al primer disparo con escudo al 100%", () => {
-    const soldado = new Soldado(new _EscudoConPorcentaje(100));
-    soldado.recibirDisparo(1); // escudo baja a 50%
-    expect(soldado.estaVivo()).toBe(true);
+describe("Soldado sin escudo", () => {
+  it("muere con un solo disparo de otro soldado", () => {
+    const soldado1 = new Soldado(); // atacante
+    const soldado2 = new Soldado(); // defensor
+
+    soldado1.disparar(soldado2); // acción real
+    expect(soldado2.estaVivo()).toBe(false);
   });
 
-  it("sobrevive al segundo disparo con escudo al 50%", () => {
-    const soldado = new Soldado(new _EscudoConPorcentaje(100));
-    soldado.recibirDisparo(1); // escudo baja a 50%
-    soldado.recibirDisparo(1); // escudo baja a 0%
-    expect(soldado.estaVivo()).toBe(true);
-  });
+  it("resiste 4 disparos y muere en el quinto", () => {
+    const atacante = new Soldado();
+    const defensor = new Soldado(new _EscudoConPorcentaje(100));
 
-  it("muere al tercer disparo cuando el escudo ya no protege", () => {
-  const soldado = new Soldado(new _EscudoConPorcentaje(100));
-  soldado.recibirDisparo(1); // escudo baja a 50%
-  soldado.recibirDisparo(1); // escudo baja a 0%
-  soldado.recibirDisparo(1); // sin escudo → daño completo
-  expect(soldado.estaVivo()).toBe(false);
-});
+    atacante.disparar(defensor); // escudo baja a 75%
+    expect(defensor.estaVivo()).toBe(true);
 
-it("deberia disparar correctamente", () => {
-    const soldado = new Soldado(new _EscudoConPorcentaje(100));
-    expect(() => soldado.disparar()).not.toThrow();
-    soldado.recibirDisparo(1);
-    expect(soldado.estaVivo()).toBe(true);
-  });
+    atacante.disparar(defensor); // escudo sigue al 50%
+    expect(defensor.estaVivo()).toBe(true);
 
-  it("soldado 1 dispara correctamente", () => {
-    const soldado1 = new Soldado(new _EscudoConPorcentaje(100));
-    const soldado2 = new Soldado(new _EscudoConPorcentaje(100));
-    expect(() => soldado1.disparar()).not.toThrow();
-    soldado2.recibirDisparo(1);
-    expect(soldado2.estaVivo()).toBe(true);
-  });
+    atacante.disparar(defensor); // escudo baja a 25%
+    expect(defensor.estaVivo()).toBe(true);
 
-  it("soldado 2 dispara correctamente", () => {
-    const soldado1 = new Soldado(new _EscudoConPorcentaje(100));
-    const soldado2 = new Soldado(new _EscudoConPorcentaje(100));
-    expect(() => soldado2.disparar()).not.toThrow();
-    soldado1.recibirDisparo(1);
-    expect(soldado1.estaVivo()).toBe(true);
+    atacante.disparar(defensor); // escudo roto, daño directo
+    expect(defensor.estaVivo()).toBe(true);
+
+    atacante.disparar(defensor); // soldado muere
+    expect(defensor.estaVivo()).toBe(false);
   });
 });
